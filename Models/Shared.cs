@@ -1,6 +1,4 @@
-using FishCamp.Models;
-
-namespace VacationLog.Models;
+namespace FishCamp.Models;
 
 public class Coordinates
 {
@@ -8,10 +6,11 @@ public class Coordinates
     public decimal Long { get; set; }
 }
 
-public class FishType
+public class Fish
 {
-    public int FishTypeId { get; set; }
-    public string FishTypeDescription { get; set; }
+    public int FishId { get; set; }
+    public string FishDescription { get; set; }
+    public int FishCount { get; set; }
 }
 
 public class Comment

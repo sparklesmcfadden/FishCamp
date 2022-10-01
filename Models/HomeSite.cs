@@ -1,6 +1,4 @@
-using FishCamp.Models;
-
-namespace VacationLog.Models;
+namespace FishCamp.Models;
 
 public class HomeSite
 {

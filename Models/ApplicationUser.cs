@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using VacationLog.Models;
 
 namespace FishCamp.Models;
 

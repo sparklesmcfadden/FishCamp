@@ -4,7 +4,6 @@ using Microsoft.Extensions.Options;
 using Duende.IdentityServer.EntityFramework.Options;
 using FishCamp.Models;
 using Microsoft.AspNetCore.Identity;
-using VacationLog.Models;
 
 namespace FishCamp.Data;
 
@@ -38,6 +37,6 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     public DbSet<Location> Locations { get; set; }
     public DbSet<Photo> Photos { get; set; }
     public DbSet<UserCatches> UserCatches { get; set; }
-    public DbSet<FishType> FishTypes { get; set; }
+    public DbSet<Fish> FishTypes { get; set; }
     public DbSet<Comment> Comments { get; set; }
 }
