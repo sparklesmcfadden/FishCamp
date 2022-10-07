@@ -27,14 +27,14 @@ public class CampController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("site")]
+    [HttpGet("site/{id}")]
     public async Task<IActionResult> GetSiteById([FromRoute] int id)
     {
         var result = await _homeSiteService.GetHomeSiteById(id);
         return Ok(result);
     }
 
-    [HttpGet("details")]
+    [HttpGet("details/{id}")]
     public async Task<IActionResult> GetSiteDetails([FromRoute] int id)
     {
         var result = await _homeSiteService.GetHomeSiteDetail(id);
@@ -48,7 +48,7 @@ public class CampController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("user")]
+    [HttpGet("user/{id}")]
     public async Task<IActionResult> GetSitesByUser([FromRoute] string id)
     {
         var result = await _homeSiteService.GetHomeSitesByUserId(id);

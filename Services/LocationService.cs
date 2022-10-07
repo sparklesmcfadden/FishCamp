@@ -25,22 +25,23 @@ public class LocationService
             .Include(l => l.Comments)
             .Include(l => l.Photos)
             .Include(l => l.Fish)
+            .Include(l => l.HomeSite)
             .FirstOrDefaultAsync(l => l.LocationId == id);
         return location;
     }
 
-    public async Task<bool> CreateLocation(Location location)
+    public async Task<int> CreateLocation(Location location)
     {
         _context.Locations.Add(location);
         try
         {
             await _context.SaveChangesAsync();
-            return true;
+            return location.LocationId;
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return false;
+            return 0;
         }
     }
 

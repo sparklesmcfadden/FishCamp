@@ -38,6 +38,7 @@ public class HomeSiteService
     public async Task<HomeSite> GetHomeSiteDetail(int id)
     {
         var homeSite = await _context.HomeSites
+            .Include(h => h.Locations)
             .Include(h => h.Users)
             .Include(h => h.Photos)
             .Include(h => h.Comments)
