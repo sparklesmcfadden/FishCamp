@@ -2,12 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Duende.IdentityServer.EntityFramework.Options;
-using FishCamp.Models;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
-namespace FishCamp.Data;
+namespace FishCamp.Models;
 
-public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IDataProtectionKeyContext
 {
     public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions)
         : base(options, operationalStoreOptions)
@@ -33,10 +33,20 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
         builder.Entity<IdentityUserToken<string>>().ToTable("UserToken");
     }
 
-    public DbSet<HomeSite> HomeSites { get; set; }
+    public DbSet<Trip> Trips { get; set; }
+    public DbSet<TripUser> TripUsers { get; set; }
+    public DbSet<TripComment> TripComments { get; set; }
     public DbSet<Location> Locations { get; set; }
+    public DbSet<LocationTrip> LocationTrips { get; set; }
+    public DbSet<LocationComment> LocationComments { get; set; }
+    public DbSet<LocationPhoto> LocationPhotos { get; set; }
+    public DbSet<LocationVisit> LocationVisits { get; set; }
+    public DbSet<LocationVisitComment> LocationVisitComments { get; set; }
+    public DbSet<LocationVisitPhoto> LocationVisitPhotos { get; set; }
+    public DbSet<LocationVisitUser> LocationVisitUsers { get; set; }
     public DbSet<Photo> Photos { get; set; }
-    public DbSet<UserCatches> UserCatches { get; set; }
-    public DbSet<Fish> FishTypes { get; set; }
+    public DbSet<PhotoComment> PhotoComments { get; set; }
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<Fish> FishTypes { get; set; }
+    public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
 }

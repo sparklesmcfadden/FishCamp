@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
-using FishCamp.Data;
 using FishCamp.Models;
+using FishCamp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +19,13 @@ builder.Services.AddIdentityServer()
 
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
+builder.Services.AddDataProtection();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<TripService>();
+builder.Services.AddScoped<LocationService>();
 
 var app = builder.Build();
 

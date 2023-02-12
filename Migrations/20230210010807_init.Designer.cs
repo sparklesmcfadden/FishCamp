@@ -3,6 +3,7 @@ using System;
 using FishCamp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FishCamp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230210010807_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,6 +281,125 @@ namespace FishCamp.Migrations
                     b.ToTable("FishTypes");
                 });
 
+            modelBuilder.Entity("FishCamp.Models.HomeSite", b =>
+                {
+                    b.Property<int>("HomeSiteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("HomeSiteId"));
+
+                    b.Property<string>("Coordinates")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("HomeSiteId");
+
+                    b.ToTable("HomeSites");
+                });
+
+            modelBuilder.Entity("FishCamp.Models.HomeSiteComment", b =>
+                {
+                    b.Property<int>("HomeSiteCommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("HomeSiteCommentId"));
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("HomeSiteId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("HomeSiteCommentId");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("HomeSiteId");
+
+                    b.ToTable("HomeSiteComments");
+                });
+
+            modelBuilder.Entity("FishCamp.Models.HomeSiteLocation", b =>
+                {
+                    b.Property<int>("HomeSiteLocationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("HomeSiteLocationId"));
+
+                    b.Property<int>("HomeSiteId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("HomeSiteLocationId");
+
+                    b.HasIndex("HomeSiteId");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("HomeSiteLocations");
+                });
+
+            modelBuilder.Entity("FishCamp.Models.HomeSitePhoto", b =>
+                {
+                    b.Property<int>("HomeSitePhotoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("HomeSitePhotoId"));
+
+                    b.Property<int>("HomeSiteId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PhotoId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("HomeSitePhotoId");
+
+                    b.HasIndex("HomeSiteId");
+
+                    b.HasIndex("PhotoId");
+
+                    b.ToTable("HomeSitePhotos");
+                });
+
+            modelBuilder.Entity("FishCamp.Models.HomeSiteUser", b =>
+                {
+                    b.Property<int>("HomeSiteUserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("HomeSiteUserId"));
+
+                    b.Property<int>("HomeSiteId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("HomeSiteUserId");
+
+                    b.HasIndex("HomeSiteId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("HomeSiteUsers");
+                });
+
             modelBuilder.Entity("FishCamp.Models.Location", b =>
                 {
                     b.Property<int>("LocationId")
@@ -286,29 +408,11 @@ namespace FishCamp.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LocationId"));
 
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<decimal>("Latitude")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("LocationDescription")
+                    b.Property<string>("Coordinates")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<string>("LocationName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Longitude")
-                        .HasColumnType("numeric");
 
                     b.HasKey("LocationId");
-
-                    b.HasIndex("CreatedById");
 
                     b.ToTable("Locations");
                 });
@@ -359,27 +463,27 @@ namespace FishCamp.Migrations
                     b.ToTable("LocationPhotos");
                 });
 
-            modelBuilder.Entity("FishCamp.Models.LocationTrip", b =>
+            modelBuilder.Entity("FishCamp.Models.LocationUser", b =>
                 {
-                    b.Property<int>("LocationTripId")
+                    b.Property<int>("LocationUserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LocationTripId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LocationUserId"));
 
                     b.Property<int>("LocationId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("TripId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
 
-                    b.HasKey("LocationTripId");
+                    b.HasKey("LocationUserId");
 
                     b.HasIndex("LocationId");
 
-                    b.HasIndex("TripId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("LocationTrips");
+                    b.ToTable("LocationUsers");
                 });
 
             modelBuilder.Entity("FishCamp.Models.LocationVisit", b =>
@@ -390,10 +494,7 @@ namespace FishCamp.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LocationVisitId"));
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("LocationId")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("VisitDate")
@@ -403,7 +504,7 @@ namespace FishCamp.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("LocationVisits");
+                    b.ToTable("LocationVisit");
                 });
 
             modelBuilder.Entity("FishCamp.Models.LocationVisitComment", b =>
@@ -426,7 +527,7 @@ namespace FishCamp.Migrations
 
                     b.HasIndex("LocationVisitId");
 
-                    b.ToTable("LocationVisitComments");
+                    b.ToTable("LocationVisitComment");
                 });
 
             modelBuilder.Entity("FishCamp.Models.LocationVisitPhoto", b =>
@@ -449,7 +550,7 @@ namespace FishCamp.Migrations
 
                     b.HasIndex("PhotoId");
 
-                    b.ToTable("LocationVisitPhotos");
+                    b.ToTable("LocationVisitPhoto");
                 });
 
             modelBuilder.Entity("FishCamp.Models.LocationVisitUser", b =>
@@ -464,6 +565,7 @@ namespace FishCamp.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("LocationVisitUserId");
@@ -472,7 +574,7 @@ namespace FishCamp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("LocationVisitUsers");
+                    b.ToTable("LocationVisitUser");
                 });
 
             modelBuilder.Entity("FishCamp.Models.Photo", b =>
@@ -518,82 +620,6 @@ namespace FishCamp.Migrations
                     b.HasIndex("PhotoId");
 
                     b.ToTable("PhotoComments");
-                });
-
-            modelBuilder.Entity("FishCamp.Models.Trip", b =>
-                {
-                    b.Property<int>("TripId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TripId"));
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("TripDescription")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TripName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("TripId");
-
-                    b.ToTable("Trips");
-                });
-
-            modelBuilder.Entity("FishCamp.Models.TripComment", b =>
-                {
-                    b.Property<int>("TripCommentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TripCommentId"));
-
-                    b.Property<int>("CommentId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TripId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("TripCommentId");
-
-                    b.HasIndex("CommentId");
-
-                    b.HasIndex("TripId");
-
-                    b.ToTable("TripComments");
-                });
-
-            modelBuilder.Entity("FishCamp.Models.TripUser", b =>
-                {
-                    b.Property<int>("TripUserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TripUserId"));
-
-                    b.Property<int>("TripId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
-                    b.HasKey("TripUserId");
-
-                    b.HasIndex("TripId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("TripUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.DataProtectionKey", b =>
@@ -761,14 +787,79 @@ namespace FishCamp.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FishCamp.Models.Location", b =>
+            modelBuilder.Entity("FishCamp.Models.HomeSiteComment", b =>
                 {
-                    b.HasOne("FishCamp.Models.ApplicationUser", "CreatedBy")
+                    b.HasOne("FishCamp.Models.Comment", "Comment")
                         .WithMany()
-                        .HasForeignKey("CreatedById")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FishCamp.Models.HomeSite", "HomeSite")
+                        .WithMany("HomeSiteComments")
+                        .HasForeignKey("HomeSiteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("HomeSite");
+                });
+
+            modelBuilder.Entity("FishCamp.Models.HomeSiteLocation", b =>
+                {
+                    b.HasOne("FishCamp.Models.HomeSite", "HomeSite")
+                        .WithMany("HomeSiteLocations")
+                        .HasForeignKey("HomeSiteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FishCamp.Models.Location", "Location")
+                        .WithMany("HomeSiteLocations")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("HomeSite");
+
+                    b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("FishCamp.Models.HomeSitePhoto", b =>
+                {
+                    b.HasOne("FishCamp.Models.HomeSite", "HomeSite")
+                        .WithMany("HomeSitePhotos")
+                        .HasForeignKey("HomeSiteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FishCamp.Models.Photo", "Photo")
+                        .WithMany()
+                        .HasForeignKey("PhotoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("HomeSite");
+
+                    b.Navigation("Photo");
+                });
+
+            modelBuilder.Entity("FishCamp.Models.HomeSiteUser", b =>
+                {
+                    b.HasOne("FishCamp.Models.HomeSite", "HomeSite")
+                        .WithMany("HomeSiteUsers")
+                        .HasForeignKey("HomeSiteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FishCamp.Models.ApplicationUser", "User")
+                        .WithMany("HomeSiteUsers")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("CreatedBy");
+                    b.Navigation("HomeSite");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FishCamp.Models.LocationComment", b =>
@@ -809,34 +900,30 @@ namespace FishCamp.Migrations
                     b.Navigation("Photo");
                 });
 
-            modelBuilder.Entity("FishCamp.Models.LocationTrip", b =>
+            modelBuilder.Entity("FishCamp.Models.LocationUser", b =>
                 {
                     b.HasOne("FishCamp.Models.Location", "Location")
-                        .WithMany("LocationTrips")
+                        .WithMany("LocationUsers")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FishCamp.Models.Trip", "Trip")
+                    b.HasOne("FishCamp.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Location");
 
-                    b.Navigation("Trip");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FishCamp.Models.LocationVisit", b =>
                 {
-                    b.HasOne("FishCamp.Models.Location", "Location")
+                    b.HasOne("FishCamp.Models.Location", null)
                         .WithMany("LocationVisits")
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Location");
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("FishCamp.Models.LocationVisitComment", b =>
@@ -888,7 +975,8 @@ namespace FishCamp.Migrations
                     b.HasOne("FishCamp.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("LocationVisit");
 
@@ -922,43 +1010,6 @@ namespace FishCamp.Migrations
                     b.Navigation("Comment");
 
                     b.Navigation("Photo");
-                });
-
-            modelBuilder.Entity("FishCamp.Models.TripComment", b =>
-                {
-                    b.HasOne("FishCamp.Models.Comment", "Comment")
-                        .WithMany()
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FishCamp.Models.Trip", "Trip")
-                        .WithMany("TripComments")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Comment");
-
-                    b.Navigation("Trip");
-                });
-
-            modelBuilder.Entity("FishCamp.Models.TripUser", b =>
-                {
-                    b.HasOne("FishCamp.Models.Trip", "Trip")
-                        .WithMany("TripUsers")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FishCamp.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Trip");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1016,16 +1067,31 @@ namespace FishCamp.Migrations
                 {
                     b.Navigation("Comments");
 
+                    b.Navigation("HomeSiteUsers");
+
                     b.Navigation("Photos");
+                });
+
+            modelBuilder.Entity("FishCamp.Models.HomeSite", b =>
+                {
+                    b.Navigation("HomeSiteComments");
+
+                    b.Navigation("HomeSiteLocations");
+
+                    b.Navigation("HomeSitePhotos");
+
+                    b.Navigation("HomeSiteUsers");
                 });
 
             modelBuilder.Entity("FishCamp.Models.Location", b =>
                 {
+                    b.Navigation("HomeSiteLocations");
+
                     b.Navigation("LocationComments");
 
                     b.Navigation("LocationPhotos");
 
-                    b.Navigation("LocationTrips");
+                    b.Navigation("LocationUsers");
 
                     b.Navigation("LocationVisits");
                 });
@@ -1042,13 +1108,6 @@ namespace FishCamp.Migrations
             modelBuilder.Entity("FishCamp.Models.Photo", b =>
                 {
                     b.Navigation("PhotoComments");
-                });
-
-            modelBuilder.Entity("FishCamp.Models.Trip", b =>
-                {
-                    b.Navigation("TripComments");
-
-                    b.Navigation("TripUsers");
                 });
 #pragma warning restore 612, 618
         }
