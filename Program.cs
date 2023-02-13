@@ -26,6 +26,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<TripService>();
 builder.Services.AddScoped<LocationService>();
+builder.Services.AddScoped<CommentService>();
 
 var app = builder.Build();
 

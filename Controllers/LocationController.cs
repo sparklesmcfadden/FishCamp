@@ -8,10 +8,12 @@ namespace FishCamp.Controllers;
 public class LocationController : Controller
 {
     private readonly LocationService _locationService;
+    private readonly CommentService _commentService;
 
-    public LocationController(LocationService locationService)
+    public LocationController(LocationService locationService, CommentService commentService)
     {
         _locationService = locationService;
+        _commentService = commentService;
     }
 
     [HttpGet]
@@ -88,8 +90,34 @@ public class LocationController : Controller
     public async Task<IActionResult> DeleteLocationVisit([FromRoute] int visitId)
     {
         var result = await _locationService.DeleteLocationVisit(visitId);
-        {
-            return Ok(result);
-        }
+        return Ok(result);
+    }
+
+    [HttpPost("{locationId}/comment")]
+    public async Task<IActionResult> PostLocationComment(Comment comment, [FromRoute] int locationId)
+    {
+        var result = await _commentService.CreateLocationComment(comment, locationId);
+        return Ok(result);
+    }
+
+    [HttpPost("{locationId}/visits/{visitId}/comment")]
+    public async Task<IActionResult> PostVisitComment(Comment comment, [FromRoute] int visitId)
+    {
+        var result = await _commentService.CreateLocationVisitComment(comment, visitId);
+        return Ok(result);
+    }
+
+    [HttpPost("{locationId}/comment/{commentId}")]
+    public async Task<IActionResult> DeleteLocationComment([FromRoute] int commentId)
+    {
+        var result = await _commentService.DeleteLocationComment(commentId);
+        return Ok(result);
+    }
+
+    [HttpPost("{locationId}/visits/{visitId}/comment/{commentId}")]
+    public async Task<IActionResult> DeleteVisitComment([FromRoute] int commentId)
+    {
+        var result = await _commentService.DeleteLocationVisitComment(commentId);
+        return Ok(result);
     }
 }

@@ -72,21 +72,6 @@ public class TripService
         }
     }
 
-    public async Task<int> AddTripComment(Comment comment, int tripId)
-    {
-        _context.Comments.Add(comment);
-        var trip = await _context.Trips.SingleAsync(h => h.TripId == tripId);
-        var tripComment = new TripComment
-        {
-            Trip = trip,
-            Comment = comment
-        };
-        _context.TripComments.Add(tripComment);
-        await _context.SaveChangesAsync();
-
-        return comment.CommentId;
-    }
-
     public async Task<int> AddUserToTrip(string userId, int tripId)
     {
         var user = await _context.Users.SingleAsync(u => u.Id == userId);
